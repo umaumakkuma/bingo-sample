@@ -1,3 +1,9 @@
+// シャッフルタイマーのグローバル変数
+var shuffleTimer;
+
+// 定数定義
+var SHUFFLE_INTERVAL = 20; // ミリ秒
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -22,7 +28,7 @@ var app = new Vue({
       this.maxNumber = Number(this.maxNumber);
 
       // 番号バリデーション
-      if (this.maxNumber < 1 || this.maxNumber > 101) {
+      if (this.maxNumber < 1 || this.maxNumber > 100) {
         this.maxNumberValidationError = true;
         return;
       } else {
@@ -35,7 +41,7 @@ var app = new Vue({
       // 番号管理オブジェクト生成
       for (let i = 0; i < this.maxNumber; i++) {
         this.chosenNumber.push({
-          id: Number([i]) + 1,
+          id: i + 1,
           isHit: false
         });
       }
@@ -57,7 +63,7 @@ var app = new Vue({
       shuffleTimer = setInterval(function () {
         const random = Math.floor(Math.random() * this.remainNumber.length);
         this.shuffleNumber = this.remainNumber[random];
-      }.bind(this), 20);
+      }.bind(this), SHUFFLE_INTERVAL);
     },
     stopShuffle: function() {
       // STOPボタン押下時
